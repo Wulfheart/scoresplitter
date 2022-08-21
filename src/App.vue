@@ -1,53 +1,51 @@
 <script setup lang="ts">
-import HelloWorld from "./components/HelloWorld.vue";
-import TheWelcome from "./components/TheWelcome.vue";
+import { ref } from 'vue'
+import * as PDFJSlib from "pdfjs-dist";
+
+
+PDFJSlib.GlobalWorkerOptions.workerSrc = "/public/pdf.worker.min.js"
+const score = ref<HTMLInputElement|null>(null)
+
+async function fill() {
+  if(score.value?.files && score.value.files.length > 0) {
+    let file = score.value.files[0]
+    let buffer = await file.arrayBuffer()
+    let arr = new Uint8Array(buffer)
+    let loadingTask = PDFJSlib.getDocument(arr)
+    
+    let doc = await loadingTask.promise
+    
+    console.debug(doc.numPages)
+    let page = await doc.getPage(1)
+
+    let canvas = document.createElement('canvas')
+    canvas.width = page.getViewport().viewBox[2]
+    canvas.height = page.getViewport().viewBox[3]
+
+    let viewport = page.getViewport({scale: 1.0})
+    let ctx =  canvas.getContext("2d")
+    if (ctx == null) {
+      throw new Error("");
+      
+    }
+
+    let renderTask = page.render({canvasContext: ctx, viewport: viewport})
+
+    await renderTask.promise
+    console.debug(canvas)
+    let data = canvas.toDataURL("image/jpeg")
+
+    console.log(data)
+    
+
+
+  }
+}
+
 </script>
 
 <template>
-  <header>
-    <img
-      alt="Vue logo"
-      class="logo"
-      src="./assets/logo.svg"
-      width="125"
-      height="125"
-    />
+<input type="file" ref="score" @change="fill" accept="application/pdf">
 
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-    </div>
-  </header>
 
-  <main>
-    <TheWelcome />
-  </main>
 </template>
-
-<style scoped>
-header {
-  line-height: 1.5;
-}
-
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
-
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
-}
-</style>

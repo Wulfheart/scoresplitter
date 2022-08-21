@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref, reactive } from 'vue'
 import {PDF} from './utils/allUtils'
+
 const score = ref<HTMLInputElement|null>(null)
 // const arr = reactive<Array<string>>([])
 let arr = ref<Array<string>>([])
@@ -18,9 +19,9 @@ async function fill() {
 <template>
 <input type="file" ref="score" @change="fill" accept="application/pdf">
 
-<li v-for="i in arr">
-  <img :src="i" alt="">
-</li>
+<div v-for="i in arr" class="h-screen max-h-screen bg-green-500 border-y-2">
+  <img :src="i" alt="" class="object-contain max-h-full">
+</div>
 
 
 </template>

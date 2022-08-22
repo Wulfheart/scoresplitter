@@ -1,6 +1,5 @@
-
 export enum StepEnum {
-    PDFUpload,
-    PartSelection,
-    Export
+  PDFUpload,
+  PartSelection,
+  Export,
 }

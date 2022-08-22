@@ -7,7 +7,7 @@
       "@/*": ["./src/*"]
     },
     "allowJs": true,
-    "checkJs": false,
+    "checkJs": false
   },
 
   "references": [

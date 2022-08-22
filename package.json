@@ -8,9 +8,10 @@
     "build-only": "vite build",
     "type-check": "vue-tsc --noEmit",
     "lint": "npx eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore",
-    "format": "npx prettier "
+    "format": "npx prettier . --write"
   },
   "dependencies": {
+    "@types/wicg-file-system-access": "^2020.9.5",
     "vue": "^3.2.37"
   },
   "devDependencies": {

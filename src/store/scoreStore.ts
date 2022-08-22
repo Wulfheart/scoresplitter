@@ -23,7 +23,9 @@ export const useScoreStore = defineStore("score", () => {
   }
 
   function advanceStep() {
-    currentStep.value++;
+    if (currentStep.value < StepEnum.Export) {
+      currentStep.value++;
+    }
   }
 
   return { pdf, setPdf, addPart, deletePart, advanceStep, parts, currentStep };

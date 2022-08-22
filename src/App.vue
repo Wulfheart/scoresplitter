@@ -3,27 +3,24 @@ import { storeToRefs } from "pinia";
 import { ref, reactive } from "vue";
 import { useScoreStore } from "./store/scoreStore";
 import { PDF } from "./utils/allUtils";
+import { StepEnum } from "./utils/StepEnum";
+import Export from "./components/steps/Export.vue";
+import PDFUpload from "./components/steps/PDFUpload.vue";
+import PartSelection from "./components/steps/PartSelection.vue";
+import Progress from "./components/Progress.vue";
 
 const scoreStore = useScoreStore();
 
 const { currentStep } = storeToRefs(scoreStore);
 
-const score = ref<HTMLInputElement | null>(null);
 let arr = ref<Array<string>>([]);
-
-async function fill() {
-  if (score.value?.files && score.value.files.length > 0) {
-    let file = score.value.files[0];
-    let pdf = await PDF.fromFile(file);
-    arr.value = pdf.imgs;
-  }
-}
 </script>
 
 <template>
-  <input type="file" ref="score" @change="fill" accept="application/pdf" />
-
-  <div v-for="i in arr" class="h-screen max-h-screen border-y-2 bg-green-500">
-    <img :src="i" alt="" class="max-h-full object-contain" />
+  <div class="min-h-screen bg-gray-100 px-4 py-12">
+    <Progress :current-step="currentStep" class="pb-12"></Progress>
+    <PDFUpload v-if="currentStep === StepEnum.PDFUpload"></PDFUpload>
+    <PartSelection></PartSelection>
+    <Export></Export>
   </div>
 </template>

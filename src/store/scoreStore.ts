@@ -4,10 +4,10 @@ import { StepEnum } from "@/utils/StepEnum"
 import { defineStore } from "pinia"
 import { ref, type Ref } from "vue"
 
-export const useCounterStore = defineStore('score', () => {
-    const pdf: Ref<PDF | null> = ref(null)
-    const parts: Ref<Array<Part>> = ref([])
-    const currentStep = ref(StepEnum.PDFUpload)
+export const useScoreStore = defineStore('score', () => {
+    const pdf = ref<PDF | null>(null)
+    const parts = ref<Array<Part>>([])
+    const currentStep = ref<StepEnum>(StepEnum.PDFUpload)
 
     function setPdf(score: PDF) {
         pdf.value = score
@@ -15,6 +15,7 @@ export const useCounterStore = defineStore('score', () => {
 
     function addPart(part: Part) {
         parts.value.push(part)
+        parts.value.sort((a, b) => a.startPage - b.startPage)
     }
 
     function deletePart(index: number) {
@@ -25,5 +26,5 @@ export const useCounterStore = defineStore('score', () => {
         currentStep.value++;
     }
   
-    return { pdf, setPdf, addPart, deletePart, advanceStep }
+    return { pdf, setPdf, addPart, deletePart, advanceStep, parts, currentStep }
   })

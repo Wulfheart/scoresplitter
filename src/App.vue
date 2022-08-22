@@ -1,9 +1,14 @@
 <script setup lang="ts">
+import { storeToRefs } from 'pinia';
 import { ref, reactive } from 'vue'
+import { useScoreStore } from './store/scoreStore';
 import {PDF} from './utils/allUtils'
 
+const scoreStore = useScoreStore()
+
+const {currentStep} = storeToRefs(scoreStore)
+
 const score = ref<HTMLInputElement|null>(null)
-// const arr = reactive<Array<string>>([])
 let arr = ref<Array<string>>([])
 
 async function fill() {
@@ -11,6 +16,7 @@ async function fill() {
     let file = score.value.files[0]
     let pdf = await PDF.fromFile(file)
     arr.value = pdf.imgs
+    
   }
 }
 

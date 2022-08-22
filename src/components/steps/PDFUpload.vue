@@ -29,10 +29,10 @@ async function getPdf() {
 </script>
 
 <template>
-  <div class="mx-auto max-w-lg">
+  <div class="mx-auto flex w-full max-w-lg flex-grow flex-col">
     <button
       type="button"
-      class="relative block w-full rounded-lg border-2 border-dashed border-gray-300 p-12 text-center hover:border-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2"
+      class="relative block w-full flex-grow rounded-lg border-2 border-dashed border-gray-300 p-12 text-center hover:border-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2"
       @click="getPdf"
     >
       <svg
@@ -56,6 +56,10 @@ async function getPdf() {
   </div>
   <div
     v-if="loading"
-    class="fixed inset-0 h-screen bg-gray-500 bg-opacity-75 transition-opacity"
-  ></div>
+    class="fixed inset-0 grid h-screen place-content-center bg-gray-500 bg-opacity-75 transition-opacity"
+  >
+    <div class="">
+      <div class="h-24 w-24 animate-ping rounded-full bg-white"></div>
+    </div>
+  </div>
 </template>

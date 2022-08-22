@@ -17,10 +17,12 @@ let arr = ref<Array<string>>([]);
 </script>
 
 <template>
-  <div class="min-h-screen bg-gray-100 px-4 py-12">
+  <div class="flex min-h-screen flex-col bg-gray-100 px-4 py-12">
     <Progress :current-step="currentStep" class="pb-12"></Progress>
     <PDFUpload v-if="currentStep === StepEnum.PDFUpload"></PDFUpload>
-    <PartSelection></PartSelection>
-    <Export></Export>
+    <PartSelection
+      v-if="currentStep === StepEnum.PartSelection"
+    ></PartSelection>
+    <Export v-if="currentStep === StepEnum.Export"></Export>
   </div>
 </template>

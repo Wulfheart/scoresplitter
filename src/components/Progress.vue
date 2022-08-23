@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { useScoreStore } from "@/store/scoreStore";
 import { StepEnum } from "@/utils/StepEnum";
+import { storeToRefs } from "pinia";
 import { defineProps } from "vue";
 import ProgressPart from "./ProgressPart.vue";
 
@@ -10,10 +11,16 @@ const props = defineProps<{
 
 const store = useScoreStore();
 
+const { currentStep } = storeToRefs(store);
+
 function handleReset() {
   if (confirm("Bistdu sicher, dass du alles zurücksetzen möchtest?")) {
     store.reset();
   }
+}
+
+function goToPartSelection() {
+  currentStep.value = StepEnum.PartSelection;
 }
 </script>
 
@@ -32,6 +39,7 @@ function handleReset() {
         :handled-step="StepEnum.PartSelection"
         name="Schritt 2"
         description="Stimmen auswählen"
+        @clicked="goToPartSelection"
       />
       <ProgressPart
         :current-step="currentStep"

@@ -8,6 +8,7 @@ export const useScoreStore = defineStore("score", () => {
   const pdf = ref<PDF | null>(null);
   const parts = ref<Array<string>>([]);
   const currentStep = ref<StepEnum>(StepEnum.PDFUpload);
+  const prefix = ref("");
 
   function setPdf(score: PDF) {
     pdf.value = score;
@@ -24,5 +25,5 @@ export const useScoreStore = defineStore("score", () => {
     parts.value = [];
     currentStep.value = StepEnum.PDFUpload;
   }
-  return { pdf, reset, setPdf, advanceStep, parts, currentStep };
+  return { pdf, reset, setPdf, advanceStep, parts, currentStep, prefix };
 });

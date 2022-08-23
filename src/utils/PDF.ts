@@ -1,6 +1,6 @@
 import * as PDFJSlib from "pdfjs-dist";
 import { PDFDocument } from "pdf-lib";
-PDFJSlib.GlobalWorkerOptions.workerSrc = "/public/pdf.worker.min.js";
+PDFJSlib.GlobalWorkerOptions.workerSrc = "/pdf.worker.min.js";
 
 export class PDF {
   file!: File;

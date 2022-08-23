@@ -12,14 +12,16 @@ const currentPageIndex = ref(0)
 </script>
 
 <template>
-<div class="grid grid-cols-2 flex-grow">
-    <div class="">
-        <img :src="pdf?.imgs[currentPageIndex]" alt="">
-    </div>
-    <div class=" bg-teal-500">
-        two
-    </div>
+<div class="flex-grow max-h-full">
+    <div class="max-h-full h-full">
+        <div>
+            <img :src="pdf?.imgs[currentPageIndex]" alt="" class="object-contain">
+        </div>
+        <div>
 
+        </div>
+
+    </div>
 </div>
 
 </template>

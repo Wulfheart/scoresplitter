@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { useScoreStore } from "@/store/scoreStore";
-import { dir } from "console";
 import { storeToRefs } from "pinia";
 import { ref } from "vue";
 

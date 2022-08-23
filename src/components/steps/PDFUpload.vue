@@ -8,7 +8,7 @@ import Progress from "../Progress.vue";
 const store = useScoreStore();
 const score = ref<HTMLInputElement | null>(null);
 const loading = ref(false);
-const { currentStep } = storeToRefs(store);
+const { currentStep, parts } = storeToRefs(store);
 
 async function getPdf() {
   let handles: Array<FileSystemFileHandle> = await window.showOpenFilePicker({
@@ -21,6 +21,9 @@ async function getPdf() {
     loading.value = true;
     let file = await handles[0].getFile();
     let pdf = await PDF.fromFile(file);
+    for (let index = 0; index < pdf.numPages; index++) {
+      parts.value[index] = "";
+    }
     store.setPdf(pdf);
     store.advanceStep();
     loading.value = false;

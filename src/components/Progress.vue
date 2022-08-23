@@ -1,74 +1,44 @@
 <script setup lang="ts">
+import { useScoreStore } from "@/store/scoreStore";
 import { StepEnum } from "@/utils/StepEnum";
 import { defineProps } from "vue";
+import ProgressPart from "./ProgressPart.vue";
 
 const props = defineProps<{
   currentStep: StepEnum;
 }>();
+
+const store = useScoreStore();
+
+function handleReset() {
+  if (confirm("Bistdu sicher, dass du alles zurücksetzen möchtest?")) {
+    store.reset();
+  }
+}
 </script>
 
 <template>
   <nav aria-label="Progress">
     <ol role="list" class="space-y-4 md:flex md:space-y-0 md:space-x-8">
-      <li class="md:flex-1">
-        <span
-          class="group flex flex-col border-l-4 py-2 pl-4 md:border-l-0 md:border-t-4 md:pl-0 md:pt-4 md:pb-0"
-          :class="{
-            'border-gray-200': currentStep < StepEnum.PDFUpload,
-            'border-primary-600': currentStep >= StepEnum.PDFUpload,
-          }"
-        >
-          <span
-            class="text-sm font-medium"
-            :class="{
-              'text-primary-600': currentStep >= StepEnum.PDFUpload,
-              'text-gray-500': currentStep < StepEnum.PDFUpload,
-            }"
-            >Schritt 1</span
-          >
-          <span class="text-sm font-medium">PDF auswählen</span>
-        </span>
-      </li>
-
-      <li class="md:flex-1">
-        <span
-          class="flex flex-col border-l-4 py-2 pl-4 md:border-l-0 md:border-t-4 md:pl-0 md:pt-4 md:pb-0"
-          :class="{
-            'border-gray-200': currentStep < StepEnum.PartSelection,
-            'border-primary-600': currentStep >= StepEnum.PartSelection,
-          }"
-        >
-          <span
-            class="text-sm font-medium"
-            :class="{
-              'text-primary-600': currentStep >= StepEnum.PartSelection,
-              'text-gray-500': currentStep < StepEnum.PartSelection,
-            }"
-            >Schritt 2</span
-          >
-          <span class="text-sm font-medium">Stimmen zuordnen</span>
-        </span>
-      </li>
-
-      <li class="md:flex-1">
-        <span
-          class="group flex flex-col border-l-4 py-2 pl-4 md:border-l-0 md:border-t-4 md:pl-0 md:pt-4 md:pb-0"
-          :class="{
-            'border-gray-200': currentStep < StepEnum.Export,
-            'border-primary-600': currentStep >= StepEnum.Export,
-          }"
-        >
-          <span
-            class="text-sm font-medium"
-            :class="{
-              'text-primary-600': currentStep >= StepEnum.Export,
-              'text-gray-500': currentStep < StepEnum.Export,
-            }"
-            >Schritt 3</span
-          >
-          <span class="text-sm font-medium">Exportieren</span>
-        </span>
-      </li>
+      <ProgressPart
+        :current-step="currentStep"
+        :handled-step="StepEnum.PDFUpload"
+        name="Schritt 1"
+        description="PDF auswählen"
+        @clicked="handleReset"
+      />
+      <ProgressPart
+        :current-step="currentStep"
+        :handled-step="StepEnum.PartSelection"
+        name="Schritt 2"
+        description="Stimmen auswählen"
+      />
+      <ProgressPart
+        :current-step="currentStep"
+        :handled-step="StepEnum.Export"
+        name="Schritt 3"
+        description="Exportieren"
+      />
     </ol>
   </nav>
 </template>

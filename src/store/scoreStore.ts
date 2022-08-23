@@ -19,5 +19,10 @@ export const useScoreStore = defineStore("score", () => {
     }
   }
 
-  return { pdf, setPdf, advanceStep, parts, currentStep };
+  function reset() {
+    pdf.value = null;
+    parts.value = [];
+    currentStep.value = StepEnum.PDFUpload;
+  }
+  return { pdf, reset, setPdf, advanceStep, parts, currentStep };
 });
